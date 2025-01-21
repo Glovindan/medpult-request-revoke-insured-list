@@ -38,19 +38,21 @@ export default function InsuredList() {
 
 	/** Присвоить callback для получения выбранных контрагентов */
 	function setGetContractorsCallback() {
-		const callback = (): string[] => selectedContractorsIds;
+		const callback = (): string[] => {return selectedContractorsIds;}
 		Scripts.setGetContractorsCallback(callback)
 	}
 
 	/** Присвоить callback для изменения текщей задачи */
 	function setUpdateTaskIdCallback() {
-		const callback = (taskid: string): void => setTaskId(taskId);
+		const callback = (taskId: string): void => {setTaskId(taskId);}
 		Scripts.setUpdateTaskIdCallback(callback)
 	}
 
 	/** Присвоить callback для изменения согласования */
 	function setUpdateApprovalIdCallback() {
-		const callback = (approvalId: string): void => setApprovalId(taskId);
+		const callback = (approvalId: string): void => {
+			setApprovalId(approvalId);
+		}
 		Scripts.setUpdateApprovalIdCallback(callback)
 	}
 
@@ -62,7 +64,8 @@ export default function InsuredList() {
 
 	// Перезагрузка списка при изменении ID согласования
 	useEffect(() => {
-		// TODO:
+		console.log(approvalId)
+		if(reloadHandler) reloadHandler();
 	}, [approvalId])	
 
 	// Изменение выбранных контрагентов при изменении задачи
@@ -74,6 +77,11 @@ export default function InsuredList() {
 			// TODO: Завершить загрузку
 		})
 	}, [taskId])
+
+	// Изменение выбранных контрагентов
+	useEffect(() => {
+		setGetContractorsCallback()
+	}, [selectedContractorsIds])
 	
 	const [reloadHandler, setReloadHandler] = useState<() => void>(() => { });
 

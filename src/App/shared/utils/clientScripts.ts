@@ -10,6 +10,7 @@ function randomDelay() {
 
 /** Factory получения списка застрахованных */
 function getInsuredListFactory(approvalId?: string) {
+	console.log(approvalId)
 	return async (
 		page: number,
 		sortData?: SortData
@@ -57,6 +58,7 @@ type GetContractorsCallback = () => string[]
 let getContractors: GetContractorsCallback | undefined = undefined;
 /** Установить функцию обратного вызова получения выбранных контрагентов */
 function setGetContractorsCallback(callback: GetContractorsCallback): void {
+	(window as any).getContractors = callback;
 	getContractors = callback;
 }
 
@@ -67,6 +69,7 @@ type UpdateIdCallback = (id: string) => void
 let setTaskId: UpdateIdCallback | undefined = undefined;
 /** Установить функцию обратного вызова изменения id задачи на форме */
 function setUpdateTaskIdCallback(callback: UpdateIdCallback): void {
+	(window as any).setTaskId = callback;
 	setTaskId = callback;
 }
 
@@ -74,6 +77,7 @@ function setUpdateTaskIdCallback(callback: UpdateIdCallback): void {
 let setApprovalId: UpdateIdCallback | undefined = undefined;
 /** Установить функцию обратного вызова изменения id согласования на форме */
 function setUpdateApprovalIdCallback(callback: UpdateIdCallback): void {
+	(window as any).setApprovalId = callback;
 	setApprovalId = callback;
 }
 
